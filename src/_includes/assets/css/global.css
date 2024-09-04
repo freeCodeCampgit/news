@@ -1,23 +1,3 @@
-/* Variables
-/* ---------------------------------------------------------- */
-
-:root {
-  /* Colours */
-  --dark-blue: #002ead;
-  --theme-color: #0a0a23;
-  --gray90: #0a0a23;
-  --gray85: #1b1b32;
-  --gray80: #2a2a40;
-  --gray75: #3b3b4f;
-  --gray45: #858591;
-  --gray15: #d0d0d5;
-  --gray10: #dfdfe2;
-  --gray05: #eeeef0;
-  --gray00: #fff;
-  --header-height: 38px;
-  --blue-dark: #002ead;
-}
-
 /* Fonts
 /*------------------------------------------------------------*/
 /*@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700|Roboto+Mono:400,700");*/
@@ -285,6 +265,7 @@ html {
 
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 body {
   overflow-x: hidden;
   color: var(--gray90);
@@ -295,7 +276,7 @@ body {
   font-style: normal;
   letter-spacing: 0;
   text-rendering: optimizeLegibility;
-  background: #fff;
+  background: var(--primary-background);
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -493,4 +474,148 @@ h6 {
   margin: 1.5em 0 0.5em;
   font-size: 1.4rem;
   font-weight: 500;
+}
+
+/**
+ * Site header menu list
+ */
+.nav-list {
+  background-color: var(--gray90);
+  display: none;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
+
+/**
+ * Site header language list
+ */
+.lang-button-nav[aria-expanded='true'] + .nav-list {
+  -ms-overflow-style: none;
+  display: block;
+  max-height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  scrollbar-width: none;
+  top: calc(var(--header-height));
+}
+
+.lang-button-nav[aria-expanded='true'] + .nav-list::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 601px) {
+  [dir='rtl'] .nav-list {
+    right: auto;
+    left: 0;
+  }
+}
+
+/* WCAG fix */
+.sr-only {
+  color: white;
+  background-color: black;
+}
+
+/**
+ * Check mark for current language
+ */
+.nav-lang-list-option[aria-current='true'] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='32' height='32' preserveAspectRatio='xMidYMid meet' viewBox='0 0 16 16'%3E%3Cg fill='white'%3E%3Cpath d='M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06a.733.733 0 0 1 1.047 0l3.052 3.093l5.4-6.425a.247.247 0 0 1 .02-.022z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+  background-size: 1.2rem;
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+}
+
+.nav-lang-list-option[aria-current='true']:hover,
+.nav-lang-list-option[aria-current='true']:focus-visible {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='32' height='32' preserveAspectRatio='xMidYMid meet' viewBox='0 0 16 16'%3E%3Cg fill='currentColor'%3E%3Cpath d='M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06a.733.733 0 0 1 1.047 0l3.052 3.093l5.4-6.425a.247.247 0 0 1 .02-.022z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+/**
+ * Sub menu dividers
+ */
+.nav-line {
+  border-top: 0.0625rem solid var(--gray45);
+}
+
+/**
+ * Site navigation first level CTA's
+ */
+.exposed-button-nav,
+.lang-button-nav {
+  align-items: center;
+  background-color: var(--gray90);
+  border: 1px solid var(--gray00);
+  color: var(--gray00);
+  display: flex;
+  font-size: 18px;
+  height: var(--header-element-size);
+  justify-content: center;
+  min-width: var(--header-element-size);
+  padding: 0 4px;
+}
+
+@media (min-width: 601px) {
+  .exposed-button-nav {
+    padding-inline: 12px;
+  }
+}
+
+.exposed-button-nav:hover,
+.exposed-button-nav:hover:focus {
+  border: 1px solid var(--gray00);
+}
+
+.exposed-button-nav:is(
+    :hover,
+    :hover:focus,
+    [aria-expanded='true'],
+    [aria-expanded='true']:hover
+  ),
+.lang-button-nav:is(
+    :hover,
+    :hover:focus,
+    [aria-expanded='true'],
+    [aria-expanded='false'].force-show
+  ) {
+  background-color: var(--gray00);
+  color: var(--gray90);
+}
+
+/**
+ * Text and icon handling for first level CTA's
+ *
+ * Login btn icon is used in other places different from the site navigation
+ * and is expected to not to be displayed. The default is to hide the element
+ * but on the site navigation display it only on small viewports.
+ */
+.login-btn-icon {
+  display: none;
+}
+
+#toggle-button-nav .menu-btn-text,
+#universal-nav .login-btn-text {
+  display: none;
+}
+
+@media (min-width: 601px) {
+  #toggle-button-nav .menu-btn-text,
+  #universal-nav .login-btn-text {
+    display: inline-block;
+  }
+}
+
+#toggle-button-nav .menu-btn-icon,
+#universal-nav .login-btn-icon {
+  display: inline-block;
+}
+
+@media (min-width: 601px) {
+  #toggle-button-nav .menu-btn-icon,
+  #universal-nav .login-btn-icon {
+    display: none;
+  }
 }
